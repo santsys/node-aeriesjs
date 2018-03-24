@@ -350,7 +350,7 @@ class aeriesjs {
      * @param {number} studentId The student id to use.
      * @param {apiCallback} callback
      */
-    getContactsById(studentId, callback) {
+    getTestsById(studentId, callback) {
         this.makeApiCall(this.makeApiUrl('v2', 'students', studentId, 'tests'), function (err, body, code) {
             callback(err, body, code);
         });
