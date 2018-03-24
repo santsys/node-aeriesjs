@@ -355,6 +355,252 @@ class aeriesjs {
             callback(err, body, code);
         });
     }
+
+    /**
+     * Get college test scores.
+     * This will return a full history of all tests normally taken in preparation for college. These include: SAT I, SAT II, ACT, IB, and AP tests.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getCollegeTestsById(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'collegetestscores', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get assertive discipline.
+     * This will return a full history of all "Assertive Discipline" records for all students in the selected school. This will include incidents from previous school years and those from different schools. An "Assertive Discipline" record normally represents a behavioral incident that resulted in punitive action.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getAssertiveDisciplineById(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'assertivediscipline', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get district supplemental information.
+     * This will return student information from the "DSD" table in Aeries. This is a table that can be customized by each district with a set of fields that are consistent for all instances of a student record throughout the district (when the student is enrolled in multiple schools during the year).
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getAssertiveDisciplineById(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'districtsupplemental', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get fees and fines information.
+     * This will return a full history of all fees and fines incurred by the student, including those that have already been paid.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getFeesAndFinesById(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'fees', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student pictures.
+     * This will return the most recent photo of the student stored in Aeries.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getStudentPictureById(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'studentpictures', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student groups.
+     * Student Groups are lists of students that schools have grouped together for any purpose, such as athletic team membership, club participation, academic reasons, special programs, etc.
+     * @param {number|string} schoolCode The school code to use or "all" for all schools.
+     * @param {apiCallback} callback
+     */
+    getStudentGroups(schoolCode, callback) {
+        if (typeof schoolCode === 'function') {
+            callback = schoolCode;
+            schoolCode = 'all';
+        }
+        else if (schoolCode === null) {
+            schoolCode = 'all';
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'StudentGroups'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student enrollment.
+     * will return the enrollment history for one or all students.
+     * @param {number} studentId The student id or 0 for all.
+     * @param {apiCallback} callback
+     */
+    getStudentEnrollment(studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = 0;
+        }
+        else if (studentId === null) {
+            studentId = 0;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'enrollment', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student enrollment.
+     * will return the enrollment history for one or all students.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} studentId The student id or 0 for all.
+     * @param {apiCallback} callback
+     */
+    getStudentEnrollmentAtSchool(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = 0;
+        }
+        else if (studentId === null) {
+            studentId = 0;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'enrollment', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student enrollment.
+     * will return the enrollment history for one or all students.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} studentId The student id or 0 for all.
+     * @param {number} year The academic year to limit to. e.g. 2017 for the 2017-2018 academic year
+     * @param {apiCallback} callback
+     */
+    getStudentEnrollmentAtSchool(schoolCode, studentId, year, callback) {
+        if (studentId === null) {
+            studentId = 0;
+        }
+
+        if (year < 1900) {
+            callback(new Error('Please enter a valid School Year.'), null, 500);
+        }
+        else {
+            this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'enrollment', studentId, 'year', year), function (err, body, code) {
+                callback(err, body, code);
+            });
+        }
+    }
+
+    /**
+     * Get student attendance.
+     * This will return detailed student attendance data for the selected school.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getAttendance(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'attendance', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student attendance.
+     * This will return detailed student attendance data for the selected school.
+     * @param {number} schoolCode The school code to use.
+     * @param {string} startDate The start date of the range. YYYYMMDD
+     * @param {string} endDate The end date of the range. YYYYMMDD
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getAttendanceByDateRange(schoolCode, startDate, endDate, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        var _url = this.makeApiUrl('v3', 'schools', schoolCode, 'attendance', studentId);
+        _url.search = '?startDate=' + startDate + '&endDate=' + endDate;
+
+        this.makeApiCall(_url, function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student attendance history.
+     * This will return a summary of Attendance History data and can be limited to a specific student.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getAttendanceHistory(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'attendancehistory', 'summary', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student attendance history by year.
+     * This will return a summary of Attendance History data for a school and academic year.
+     * @param {number} schoolCode The school code to use.
+     * @param {string} year The academic year in the format yyyy-yyyy e.g. "2017-2018"
+     * @param {apiCallback} callback
+     */
+    getAttendanceHistoryByYear(schoolCode, year, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'attendancehistory', 'summary', 'year', year), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
 }
 
 module.exports = aeriesjs;
