@@ -1,0 +1,13 @@
+{
+    "name": "aeriesjs",
+    "version": "1.0.0",
+    "description": "Aeries SIS NodeJS Helpers",
+    "main": "aeriesjs.js",
+    "author": {
+        "name": "Josh Santomieri",
+        "url": "https://www.santsys.com/"
+    },
+    "dependencies": {
+        "request": "^2.85.0"
+    }
+}
