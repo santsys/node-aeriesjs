@@ -38,7 +38,7 @@ aeries.getSchools(function (error, body, code) {
 
 **Output**
 
-```cmd
+```text
 Getting list of schools:
          0  -  Eagle Unified School District
          100  -  ZZZ Basic Code Tables
