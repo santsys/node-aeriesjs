@@ -45,18 +45,44 @@ console.log(aeries.makeApiUrl('/schools/', 999).toString());
 //    }
 //});
 
-console.log('Students at school 990 with a program 144 record:');
-aeries.getProgramsById(990, 0, 144, function (error, body, code) {
-    if (error) {
-        console.log('\t', error);
-    }
-    else if (body) {
-        for (var i in body) {
-            var s = body[i];
-            console.log('\t', s.StudentID, '-', s.ProgramDescription, '(' + s.ProgramCode + ')'); 
-        }
-    }
-    else {
-        console.log('No information found.');
-    }
-});
+//console.log('Students at school 990 with a program 144 record:');
+//aeries.getProgramsById(990, 0, 144, function (error, body, code) {
+//    if (error) {
+//        console.log('\t', error);
+//    }
+//    else if (body) {
+//        for (var i in body) {
+//            var s = body[i];
+//            console.log('\t', s.StudentID, '-', s.ProgramDescription, '(' + s.ProgramCode + ')'); 
+//        }
+//    }
+//    else {
+//        console.log('No information found.');
+//    }
+//});
+
+//console.log('Get Information for course #0618');
+//aeries.getCourseDetails('0618', function (error, body, code) {
+//    if (error) {
+//        console.log('\t', error);
+//    }
+//    else if (body) {
+//        // If a course id is specified, result is not an array.
+//        if (!Array.isArray(body)) {
+//            body = [body];
+//        }
+
+//        for (var i in body) {
+//            var j = body[i];
+//            console.log('\t', j.ID, '-', j.Title);
+//            for (var k in j) {
+//                if (!k.match(/(title|id)/i)) {
+//                    console.log('\t  -', k, '-', j[k]);
+//                }
+//            }
+//        }
+//    }
+//    else {
+//        console.log('No information found.');
+//    }
+//});

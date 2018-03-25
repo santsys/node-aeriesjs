@@ -73,7 +73,7 @@ class aeriesjs {
                 e += arguments[i].toString().replace(/(^\/|\/$)/g, '') + '/';
             }
         }
-        return new URL('api/' + apiVersion + '/' + e, this.url);
+        return new URL('api/' + apiVersion.replace(/(^\/|\/$)/g, '') + '/' + e, this.url);
     }
 
     /**
@@ -598,6 +598,217 @@ class aeriesjs {
      */
     getAttendanceHistoryByYear(schoolCode, year, callback) {
         this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'attendancehistory', 'summary', 'year', year), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student grades.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getStudentGrades(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'gpas', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get student report cards.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getReportCards(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'reportcard', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get school report card marking periods.
+     * @param {number} schoolCode The school code to use.
+     * @param {apiCallback} callback
+     */
+    getReportCardMarkingPeriods(schoolCode, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'reportcardmarkingperiods'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get graduation requirements for a school.
+     * @param {number} schoolCode The school code to use.
+     * @param {apiCallback} callback
+     */
+    getGraduationRequirements(schoolCode, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'graduationrequirements'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get graduation status summary for a student or all students.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getGraduationSummary(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'graduationstatussummary', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get graduation status summary for all students at a school in the specified grade.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} grade The grade to use.
+     * @param {apiCallback} callback
+     */
+    getGraduationSummaryByGrade(schoolCode, grade, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'graduationstatussummary', 'grade', grade), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get transcript information for a student or all students at a school.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getTranscript(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'transcript', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get class schedule for one student or all students at a school.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [studentId] The student id to use.
+     * @param {apiCallback} callback
+     */
+    getClassSchedule(schoolCode, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'classes', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get course details for one or all courses.
+     * @param {string} [courseId] The ID of the course to use.
+     * @param {apiCallback} callback
+     */
+    getCourseDetails(courseId, callback) {
+        if (typeof courseId === 'function') {
+            callback = courseId;
+            courseId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('courses', courseId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get changes in Aeries courses from a certain point in time.
+     * After you get the list of courses with changes, you will have to loop through the dataset and call the Course Information API one record at a time.
+     * @param {number} year The year e.g. 2018
+     * @param {number} month The month e.g. 3
+     * @param {number} day The month e.g. 24
+     * @param {number} hour The month e.g. 18
+     * @param {number} minute The month e.g. 35
+     * @param {apiCallback} callback
+     */
+    getCourseDataChanges(year, month, day, hour, minute, callback) {
+        this.makeApiCall(this.makeApiUrl('v2', 'CourseDataChanges', year, month, day, hour, minute), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get staff information.
+     * @param {number} [staffId] The ID of the staff member.
+     * @param {apiCallback} callback
+     */
+    getStaffDetails(staffId, callback) {
+        if (typeof staffId === 'function') {
+            callback = staffId;
+            staffId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'staff', staffId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get changes in Aeries staff data from a certain point in time.
+     * After you get the list of staff with changes, you will have to loop through the dataset and call the Staff Information API one record at a time.
+     * @param {number} year The year e.g. 2018
+     * @param {number} month The month e.g. 3
+     * @param {number} day The month e.g. 24
+     * @param {number} hour The month e.g. 18
+     * @param {number} minute The month e.g. 35
+     * @param {apiCallback} callback
+     */
+    getStaffDataChanges(year, month, day, hour, minute, callback) {
+        this.makeApiCall(this.makeApiUrl('v2', 'StaffDataChanges', year, month, day, hour, minute), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get teacher information for one or all teachers at a school.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [teacherId] The teacher id to use.
+     * @param {apiCallback} callback
+     */
+    getTeachers(schoolCode, teacherId, callback) {
+        if (typeof teacherId === 'function') {
+            callback = teacherId;
+            teacherId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'teachers', teacherId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+   /**
+    * Returns a list of teacher records associated with the given Staff ID.
+    * @param {number} staffId The staff id to use.
+    * @param {apiCallback} callback
+    */
+    getStaffTeachers(schoolCode, staffId, callback) {
+        this.makeApiCall(this.makeApiUrl('v2', 'staff', staffId), function (err, body, code) {
             callback(err, body, code);
         });
     }
