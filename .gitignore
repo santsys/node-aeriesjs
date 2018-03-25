@@ -46,3 +46,7 @@ obj/
 .ntvs_analysis.dat.tmp
 **/.recommenders/
 **/.metadata/
+
+# remove tests file
+tests.js
+
