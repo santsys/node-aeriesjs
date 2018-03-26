@@ -192,12 +192,12 @@ The configuration takes the URL of the Aeries API, the security certificate and 
 
 You can change the certificate or url using the setCertificate and setUrl functions as well.
 
-```json
-{
+```js
+var options = {
     certificate: '477abe9e7d27439681d62f4e0de1f5e1',
     url: 'https://demo.aeries.net/aeries/',
     verifyCerts: true
-}
+};
 ```
 
 ### Usage
