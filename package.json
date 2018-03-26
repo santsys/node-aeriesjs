@@ -1,7 +1,7 @@
 {
     "name": "aeriesjs",
     "version": "1.0.0",
-    "description": "Aeries SIS NodeJS Helpers",
+    "description": "Aeries SIS API NodeJS Helpers",
     "main": "aeriesjs.js",
     "engines": {
         "node": ">=8.0.0"
@@ -13,5 +13,10 @@
     "dependencies": {
         "request": "^2.85.0"
     },
-    "keywords": ["aeries", "aeries sis", "aeries api", "aeries sis api"]
+    "keywords": [
+        "aeries",
+        "aeries sis",
+        "aeries api",
+        "aeries sis api"
+    ]
 }
