@@ -3,12 +3,16 @@ An Aeries SIS (www.aeries.com) API helper library. Helping simplify using the Ae
 
 More information on the API can be found here, https://support.aeries.com/support/solutions/articles/14000077926-aeries-api-full-documentation.
 
+----
+
 ## Requirements
 
 * NodeJS 8+ (https://nodejs.org/en/download/)
 * Access to an Aeries SIS API (http://www.aeries.com/)
 
-# Example Usage
+----
+
+## Usage
 
 #### Get a list of schools
 ```js
@@ -178,4 +182,54 @@ aeries.getStudents(990, function (err, students, code) {
 ```
 Creating student export CSV file for students at school 990...
 Wrote 739 students to file "students.csv".
+```
+
+----
+
+## Configuration
+
+The configuration takes the URL of the Aeries API, the security certificate and an option to disable SSL verification.
+
+You can change the certificate or url using the setCertificate and setUrl functions as well.
+
+```json
+{
+    certificate: '477abe9e7d27439681d62f4e0de1f5e1',
+    url: 'https://demo.aeries.net/aeries/',
+    verifyCerts: true
+}
+```
+
+### Usage
+```js
+let api = require('aeriesjs');
+
+var aeries = new api({
+    certificate: '477abe9e7d27439681d62f4e0de1f5e1',
+    url: 'https://demo.aeries.net/aeries/',
+    verifyCerts: false // disable SSL verification
+});
+```
+
+```js
+let api = require('aeriesjs');
+
+var aeries = new api({
+    verifyCerts: false // disable SSL verification
+});
+
+aeries.setCertificate('477abe9e7d27439681d62f4e0de1f5e1');
+aeries.setUrl('https://demo.aeries.net/aeries/');
+```
+
+----
+
+## Callbacks
+
+All functions implement a basic callback function to process the returned error or data. The callback includes an error, the response body and an HTTP status code.
+
+```js
+aeries.getSchools(function(error, responseBody, responseCode) {
+    
+});
 ```

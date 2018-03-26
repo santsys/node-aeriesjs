@@ -39,25 +39,35 @@ class aeriesjs {
 
     /**
      * Gets the currently configured Aeries API Certificate.
+     * @returns {string} Returns the currently configured Aeries API Certificate.
      */
     get certificate() {
         return this.options.certificate;
     }
 
     /**
+     * Sets the certificate to use.
+     * @param {string} certificate
+     */
+    setCertificate(certificate) {
+        this.options.certificate = certificate;
+    }
+
+    /**
      * Gets the currently configured Aeries Url.
+     * @returns {string} Returns the currently configured API Url.
      */
     get url() {
         return this.options.url;
     }
 
     /**
-     * Gets the currently configured Aeries API Version.
+     * Sets the API url.
+     * @param {string} url
      */
-    get apiVersion() {
-        return this.options.apiVersion;
+    setUrl(url) {
+        this.options.url = url;
     }
-
 
     /**
      * Builds an Aeries API Endpoint URL.
@@ -143,7 +153,7 @@ class aeriesjs {
      * @param {number} schoolCode The school to get information for.
      * @param {apiCallback} callback
      */
-    getSchoolTerms(schoolCode, callback) {
+    getSchoolCalendar(schoolCode, callback) {
         this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'calendar'), function (err, body, code) {
             callback(err, body, code);
         });
@@ -166,7 +176,6 @@ class aeriesjs {
         });
     }
 
-
     /**
      * Get's the bell schedule for a school.
      * @param {number} schoolCode The school to get information for.
@@ -179,7 +188,7 @@ class aeriesjs {
             code = null;
         }
 
-        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'AbsenceCodes', code), function (err, body, code) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'absencecodes', code), function (err, body, code) {
             callback(err, body, code);
         });
     }
@@ -249,7 +258,7 @@ class aeriesjs {
      * @param {number} studentId The student id to use.
      * @param {apiCallback} callback
      */
-    getStudentById(schoolCode, studentId, callback) {
+    getStudentByIdExtended(schoolCode, studentId, callback) {
         this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'students', studentId, 'extended'), function (err, body, code) {
             callback(err, body, code);
         });
@@ -514,7 +523,7 @@ class aeriesjs {
      * @param {number} year The academic year to limit to. e.g. 2017 for the 2017-2018 academic year
      * @param {apiCallback} callback
      */
-    getStudentEnrollmentAtSchool(schoolCode, studentId, year, callback) {
+    getStudentEnrollmentByYear(schoolCode, studentId, year, callback) {
         if (studentId === null) {
             studentId = 0;
         }

@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Aeries SIS API NodeJS Helpers",
     "main": "aeriesjs.js",
+    "repository": "https://github.com/santsys/node-aeriesjs",
     "engines": {
         "node": ">=8.0.0"
     },
