@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "Aeries SIS NodeJS Helpers",
     "main": "aeriesjs.js",
+    "engines": {
+        "node": ">=8.0.0"
+    },
     "author": {
         "name": "Josh Santomieri",
         "url": "https://www.santsys.com/"

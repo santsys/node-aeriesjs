@@ -121,3 +121,61 @@ Get Information for course #0618:
           - PhysicalEducationIndicator - false
           - InactiveStatusCode -
 ```
+
+
+#### Real World - Creating a student CSV Export
+
+```js
+'use strict';
+
+let api = require('aeriesjs');
+let csv = require('csv-write-stream');
+let fs = require('fs');
+
+var aeries = new api({
+    certificate: '477abe9e7d27439681d62f4e0de1f5e1',
+    url: 'https://demo.aeries.net/aeries/',
+});
+
+console.log('Creating student export CSV file for students at school 990...');
+aeries.getStudents(990, function (err, students, code) {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        if (students && students.length > 0) {
+
+            var writer = csv({
+                separator: '^',
+                newline: '\r\n',
+                sendHeaders: true
+            });
+            writer.pipe(fs.createWriteStream('students.csv'));
+
+            var count = 0;
+
+            for (var i in students) {
+                var s = students[i];
+                if (s) {
+                    writer.write(s);
+                    count++;
+                }
+            }
+
+            writer.end();
+
+            console.log('Wrote ' + count + ' students to file "students.csv".');
+        }
+        else {
+            console.log('No students found.');
+        }
+    }
+});
+```
+
+**Output**
+
+```
+Creating student export CSV file for students at school 990...
+Wrote 739 students to file "students.csv".
+```

@@ -82,7 +82,6 @@ class aeriesjs {
      * @param {apiCallback} callback The callback that is called when the API call completes.
      */
     makeApiCall(url, callback) {
-        console.log(url.toString());
         var rOptions = {
             url: url.toString(),
             method: 'GET',
@@ -809,6 +808,194 @@ class aeriesjs {
     */
     getStaffTeachers(schoolCode, staffId, callback) {
         this.makeApiCall(this.makeApiUrl('v2', 'staff', staffId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get master schedule section information.
+     * If Section Number is not passed, all section records in the master schedule of the given school will be returned.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} [sectionNumber] The section number to get.
+     * @param {apiCallback} callback
+     */
+    getSection(schoolCode, sectionNumber, callback) {
+        if (typeof sectionNumber === 'function') {
+            callback = sectionNumber;
+            sectionNumber = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'sections', sectionNumber), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get changes in section data from a certain point in time.
+     * After you get the list of sections with changes, you will have to loop through the dataset and call the Section (from Master Schedule) API one record at a time.
+     * @param {number} year The year e.g. 2018
+     * @param {number} month The month e.g. 3
+     * @param {number} day The month e.g. 24
+     * @param {number} hour The month e.g. 18
+     * @param {number} minute The month e.g. 35
+     * @param {apiCallback} callback
+     */
+    getSectionDataChanges(year, month, day, hour, minute, callback) {
+        this.makeApiCall(this.makeApiUrl('v2', 'sectiondatachanges', year, month, day, hour, minute), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get section class roster.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} sectionNumber The section number to get.
+     * @param {apiCallback} callback
+     */
+    getClassRoster(schoolCode, sectionNumber, callback) {
+        this.makeApiCall(this.makeApiUrl('v1', 'schools', schoolCode, 'sections', sectionNumber, 'students'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get changes in section rosters from a certain point in time.
+     * After you get the list of sections with roster changes, you will have to loop through the dataset and call the Section Class Roster API one record at a time.
+     * @param {number} year The year e.g. 2018
+     * @param {number} month The month e.g. 3
+     * @param {number} day The month e.g. 24
+     * @param {number} hour The month e.g. 18
+     * @param {number} minute The month e.g. 35
+     * @param {apiCallback} callback
+     */
+    getClassRosterChanges(year, month, day, hour, minute, callback) {
+        this.makeApiCall(this.makeApiUrl('v2', 'sectionrosterdatachanges', year, month, day, hour, minute), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get gradebooks for a staff id.
+     * @param {number} staffId The staff id to use.
+     * @param {apiCallback} callback
+     */
+    getGradebookByStaffId(staffId, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'staff', staffid, 'gradebooks'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get all gradebooks for students in a school and section.
+     * @param {number} schoolCode The school code to use.
+     * @param {number} sectionNumber The section number to get.
+     * @param {apiCallback} callback
+     */
+    getGradebookBySection(schoolCode, sectionNumber, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'schools', schoolCode, 'sections', sectionNumber, 'gradebooks'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get a gradebook by gradebook id.
+     * @param {number} gradebookId The id of the gradebook to get.
+     * @param {apiCallback} callback
+     */
+    getGradebookById(gradebookId, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', gradebookId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get one or all assignments in a gradebook.
+     * @param {number} gradebookId
+     * @param {number} [assignmentId]
+     * @param {apiCallback} callback
+     */
+    getGradebookAssignments(gradebookId, assignmentId, callback) {
+        if (typeof assignmentId === 'function') {
+            callback = assignmentId;
+            assignmentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', gradebookId, 'assignments', assignmentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get a gradebook assignment by unique gradebook id.
+     * @param {number} uniqueId The unique id of the gradebook to get.
+     * @param {apiCallback} callback
+     */
+    getGradebookAssugnmentByUniqueId(uniqueId, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', 'assignments', uniqueId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get the final marks for a gradebook.
+     * @param {number} gradebookId
+     * @param {apiCallback} callback
+     */
+    getGradebookFinalMarks(gradebookId, callback) {
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', gradebookId, 'finalmarks'), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get gradebook student information for a given gradebook and term. 
+     * @param {number} gradebookId
+     * @param {string} gradebookTerm
+     * @param {number} [studentId]
+     * @param {apiCallback} callback
+     */
+    getGradebookStudentInfo(gradebookId, gradebookTerm, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', gradebookId, gradebookTerm, 'students', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get the scores for an assignment with the optional limit to a specific student.
+     * @param {number} gradebookId
+     * @param {number} assignmentId
+     * @param {number} [studentId]
+     * @param {apiCallback} callback
+     */
+    getGradebookAssignmentScores(gradebookId, assignmentId, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', gradebookId, 'assignments', assignmentId,  'scores', studentId), function (err, body, code) {
+            callback(err, body, code);
+        });
+    }
+
+    /**
+     * Get the scores for an assignment with the optional limit to a specific student.
+     * @param {number} uniqueId
+     * @param {number} [studentId]
+     * @param {apiCallback} callback
+     */
+    getGradebookAssignmentScoresByUniqueId(uniqueId, studentId, callback) {
+        if (typeof studentId === 'function') {
+            callback = studentId;
+            studentId = null;
+        }
+
+        this.makeApiCall(this.makeApiUrl('v3', 'gradebooks', 'assignments', uniqueId, 'scores', studentId), function (err, body, code) {
             callback(err, body, code);
         });
     }
