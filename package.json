@@ -12,5 +12,6 @@
     },
     "dependencies": {
         "request": "^2.85.0"
-    }
+    },
+    "keywords": ["aeries", "aeries sis", "aeries api", "aeries sis api"]
 }
